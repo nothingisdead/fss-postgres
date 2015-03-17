@@ -1,0 +1,5 @@
+{
+	"postgres" : {
+		"connection_string" : "postgres://meteor:meteor@127.0.0.1/meteor_test"
+	}
+}
