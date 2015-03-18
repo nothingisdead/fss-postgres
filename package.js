@@ -7,7 +7,7 @@ Package.describe({
 });
 
 Npm.depends({
-	"pg-live-query" : "0.0.2",
+	"pg-live-query" : "0.0.3",
 	"pg"            : "4.3.0",
 	"murmurhash-js" : "1.0.0"
 });

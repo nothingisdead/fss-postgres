@@ -1,7 +1,5 @@
 Postgres = window.Postgres || {};
 
-var subscriptions = {};
-
 Postgres.subscribe = function() {
 	var self = this;
 	var args = Array.prototype.slice.call(arguments, 0);
@@ -65,13 +63,13 @@ Postgres.subscribe = function() {
 		}
 	});
 
-	var name = args[0];
+	// Make the ReactiveVar read-only
+	delete data.set;
 
-	if(subscriptions[name]) {
-		subscriptions[name].stop();
-	}
+	// Alias the 'get' function
+	data.fetch = data.get;
 
-	subscriptions[name] = {
+	return _.extend(data, {
 		ready : sub.ready,
 
 		stop : function() {
@@ -79,15 +77,7 @@ Postgres.subscribe = function() {
 			observer.stop();
 			sub.stop();
 		}
-	};
-
-	// Make the ReactiveVar read-only
-	delete data.set;
-
-	// Alias the 'get' function
-	data.fetch = data.get;
-
-	return _.extend(data, subscriptions[name]);
+	});
 };
 
 function applyDiff(data, diff) {
